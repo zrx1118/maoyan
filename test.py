@@ -10,13 +10,13 @@ def get_one_page(url):
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"}
         response = requests.get(url, headers = headers)
         if response.status_code == 200:
-            print(response.text)
             return response.text
         return None
     except RequestException:
         return None
 
 def parse_one_page(html):
+    # ()括号包住的为匹配内容项
     pattern = re.compile('<dd>.*?board-index.*?(\d+)</i>' # 排名
                         +'.*?data-src="(.*?)".*?name"><a'  # 图片地址
                         +'.*?>(.*?)</a>'                   # 片名
@@ -38,7 +38,7 @@ def parse_one_page(html):
 
 
 def write_to_file(content):
-    with open('results.txt', 'a', encoding='utf-8') as f:
+    with open('result.txt', 'a', encoding='utf-8') as f:
         f.write(json.dumps(content, ensure_ascii = False) + '\n')
         f.close()
 
@@ -46,7 +46,6 @@ def write_to_file(content):
 def main(offset):
     url = 'http://maoyan.com/board/4?offset=' + str(offset)
     html = get_one_page(url)
-    print(html)
     if html:
         for item in parse_one_page(html):
             write_to_file(item)

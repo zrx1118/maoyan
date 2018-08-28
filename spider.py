@@ -40,7 +40,7 @@ def parse_one_page(html):
         }
 
 def write_to_file(content):
-    with open('result.txt', 'a', encoding='utf-8') as f:
+    with open('resul.txt', 'a', encoding='utf-8') as f:
         # json.dumps()函数的使用，将字典转化为字符串
         f.write(json.dumps(content, ensure_ascii = False) + '\n')
         f.close()
