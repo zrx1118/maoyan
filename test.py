@@ -17,15 +17,16 @@ def get_one_page(url):
 
 def parse_one_page(html):
     # ()括号包住的为匹配内容项
-    pattern = re.compile('<dd>.*?board-index.*?(\d+)</i>' # 排名
-                        +'.*?data-src="(.*?)".*?name"><a'  # 图片地址
-                        +'.*?>(.*?)</a>'                   # 片名
-                        +'.*?star">(.*?)</p>'              # 主演
-                        +'.*?releasetime">(.*?)</p>'       # 上映时间
-                        +'.*?integer">(.*?)</i>'           # 评分个位数
-                        +'.*?fraction">(.*?)</i>'          # 平分小数点
-                        +'.*?</dd>', re.S)
+    pattern = re.compile("""<dd>.*?board-index.*?(\d+)</i> # 排名
+                        .*?data-src="(.*?)".*?name"><a  # 图片地址
+                        .*?>(.*?)</a>                   # 片名
+                        .*?star">(.*?)</p>              # 主演
+                        .*?releasetime">(.*?)</p>       # 上映时间
+                        .*?integer">(.*?)</i>           # 评分个位数
+                        .*?fraction">(.*?)</i>          # 平分小数点
+                        .*?</dd>""", re.S)
     items = re.findall(pattern, html)
+
     for item in items:
         yield {
             'index': item[0],
